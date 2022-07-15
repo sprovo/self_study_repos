@@ -1,0 +1,5 @@
+node_modules
+.gitconfig
+
+# Misc Files
+.DS_Store
