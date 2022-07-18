@@ -1,4 +1,6 @@
-function render(reactElementOrPrimitive, container: HTMLElement) {
+import App from "../src/App";
+
+function render(reactElementOrPrimitive: any, container: HTMLElement) {
 	// Handles rendering children that are primitive types.
 	if (["string", "number"].includes(typeof reactElementOrPrimitive)) {
 		const node = String(reactElementOrPrimitive);
@@ -38,9 +40,11 @@ function render(reactElementOrPrimitive, container: HTMLElement) {
 }
 
 // Re-renders the UI after a state change.
-const reRender = () => {
-	render('TEST', document.querySelector("#root") as HTMLElement);
-};
+function reRender() {
+	// The roots first child gets removed because it's rendered state is stale.
+	document.querySelector("#root")?.firstChild?.remove();
+	render(App(), document.querySelector("#root") as HTMLElement);
+}
 
 export default render;
 export { reRender };

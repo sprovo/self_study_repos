@@ -1,6 +1,8 @@
-import React from "../react";
+import React, { useState } from "../react";
 
 function App() {
+  const [count, setCount] = useState(0);
+
   return (
     <div>
       <section>
@@ -10,10 +12,11 @@ function App() {
           <span style={{ display: "block", color: "red" }}>I am a span within a p tag.</span>
         </p>
       </section>
-      <button type="button" onClick={() => console.log("+1")}>
+      <button type="button" onClick={() => setCount(count + 1)}>
         +1
       </button>
-      <button type="button" onClick={() => console.log("-1")}>
+      {count}
+      <button type="button" onClick={() => setCount(count - 1)}>
         -1
       </button>
     </div>
