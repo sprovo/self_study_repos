@@ -1,11 +1,12 @@
 import createElement from './createElement';
-import { useState } from './hooks';
+import { useState, useEffect } from './hooks';
 
 // Default imports used through 'import React from "../react"'.
 const React = {
 	createElement,
-	useState
+	useState,
+	useEffect
 }
 
 export default React;
-export { useState }
+export { useState, useEffect }
