@@ -1,5 +1,8 @@
 node_modules
 .gitconfig
+.env
+.env.local
+.env.production
 
 # Misc Files
 .DS_Store
