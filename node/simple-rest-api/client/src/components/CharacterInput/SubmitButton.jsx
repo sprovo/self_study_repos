@@ -5,8 +5,8 @@ const Button = styled.button`
   padding-inline: 2rem;
 `;
 
-function SubmitButton({ children }) {
-  return <Button>{children}</Button>;
+function SubmitButton({ handleClick, children }) {
+  return <Button type="button" onClick={handleClick}>{children}</Button>;
 }
 
 export default SubmitButton;

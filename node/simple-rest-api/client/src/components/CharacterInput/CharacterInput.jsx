@@ -7,9 +7,14 @@ const CharacterInputField = styled.input`
   font-family: "Lato", sans-serif;
 `;
 
-function CharacterInput() {
+function CharacterInput({ characterName, handleInputChange }) {
   return (
-    <CharacterInputField name="character-name" placeholder="Enter an anime character's name..." />
+    <CharacterInputField
+      name="character-name"
+      placeholder="Enter an anime character's name..."
+      value={characterName}
+      onChange={handleInputChange}
+    />
   );
 }
 
