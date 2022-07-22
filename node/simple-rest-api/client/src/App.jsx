@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 
 import Layout from "./components/Layout";
 import { CharacterInput, InputContainer, SubmitButton } from "./components/CharacterInput";
@@ -10,26 +10,28 @@ const DEFAULT_QUOTE = "Hmm, no words of wisdom of coolness yet...";
 function App() {
   const [character, setCharacter] = useState("");
   const [quotes, setQuotes] = useState([]);
-  const [featuredQuote, setFeaturedQuote] = useState(null);
+  const [featuredQuoteIndex, setFeaturedQuoteIndex] = useState(null);
+
+  const featuredQuote = useMemo(() => {
+    return quotes[featuredQuoteIndex];
+  }, [quotes, featuredQuoteIndex]);
 
   function handleInputChange(event) {
     setCharacter(event.target.value);
   }
 
   function goToPrevious() {
-    const { index } = featuredQuote;
-    const previousIndex = index - 1;
-
+    const previousIndex = featuredQuoteIndex - 1;
     if (previousIndex <= 0) return;
-    setFeaturedQuote({ index: previousIndex, data: quotes[previousIndex] });
+    setFeaturedQuoteIndex(previousIndex);
   }
 
   function goToNext() {
-    const { index } = featuredQuote;
-    const nextIndex = index + 1;
+    const numOfQuotes = quotes.length || 0;
+    const nextIndex = featuredQuoteIndex + 1;
 
-    if (nextIndex >= quotes.length) return;
-    setFeaturedQuote({ index: nextIndex, data: quotes[nextIndex] });
+    if (nextIndex >= numOfQuotes) return;
+    setFeaturedQuoteIndex(nextIndex);
   }
 
   async function getCharacterQuote() {
@@ -39,7 +41,7 @@ function App() {
     const quotesData = await response.json();
 
     setQuotes(quotesData.data);
-    setFeaturedQuote({ index: 0, data: quotesData.data[0] });
+    setFeaturedQuoteIndex(0);
   }
 
   return (
@@ -57,10 +59,10 @@ function App() {
       </InputContainer>
       <QuoteContainer>
         <Pagination goToPrevious={goToPrevious} goToNext={goToNext}>
-          <Quote>{featuredQuote?.data?.quote ?? DEFAULT_QUOTE}</Quote>
+          <Quote>{featuredQuote?.quote ?? DEFAULT_QUOTE}</Quote>
           <Author>
             {featuredQuote
-              ? `${featuredQuote?.data?.character} - ${featuredQuote?.data?.anime}`
+              ? `${featuredQuote?.character} - ${featuredQuote?.anime}`
               : "Name - Show"}
           </Author>
         </Pagination>
